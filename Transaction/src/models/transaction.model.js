@@ -15,7 +15,10 @@ const {Schema, model} = require("mongoose")
         min: 0
     },
     tags: {
-        type: [String],
+        type: [{
+            type: String,
+            trim: true,
+        }],
     },
     description: {
         type: String,

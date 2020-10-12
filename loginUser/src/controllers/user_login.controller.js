@@ -6,7 +6,7 @@ class UserLoginController extends EventEmiter {
     loginUser = async ( req, res ) =>{
         try{
             const {email, password} = req.body
-            const [user] = UserLogin.find({email})
+            const [user] = await UserLogin.find({email})
             const isValid = await bcrypt.compare(password, user.password || "" )
             if(!user || !isValid) throw Error("the email or password is incorrect")
             const token = await user.generateAuthToken()

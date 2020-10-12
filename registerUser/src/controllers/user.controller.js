@@ -1,5 +1,6 @@
 const EventEmiter = require("events")
 const User = require("../models/user.model")
+const { emitUserRegistered } = require("../subscribers/registerUser.subscriber")
 
 class UserController extends EventEmiter {
     createNewUser = async (req, res) => {
@@ -19,5 +20,5 @@ class UserController extends EventEmiter {
 }
 
 const userController = new UserController()
-userController.on('userCreated', () => console.log("a user was created"))
+userController.on('userCreated', emitUserRegistered)
 module.exports= userController
