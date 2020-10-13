@@ -23,6 +23,10 @@ const {Schema, model} = require("mongoose")
     description: {
         type: String,
         required: true,
+    },
+    category: {
+        type: String,
+        required: true,
     }
  },{
      timestamps: true,

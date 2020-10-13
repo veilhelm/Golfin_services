@@ -42,5 +42,5 @@ const {Schema, model} = require("mongoose")
  })
 
 
- const publicUser = new model("User", UserSchema)
- module.exports = publicUser
+ const PublicUser = new model("User", UserSchema)
+ module.exports = PublicUser

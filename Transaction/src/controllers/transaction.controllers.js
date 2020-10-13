@@ -1,6 +1,6 @@
 const EventEmiter = require("events")
 const Transaction = require("../models/transaction.model")
-const { emitTransaction } = require("../utils/transaction.subscribers")
+const { emitTransaction } = require("../subscribers/transaction.subscribers")
 
 class TransactionController extends EventEmiter {
     createTransaction = async (req, res) => {
