@@ -10,12 +10,16 @@ class UserController extends EventEmiter {
             await user.encryptPassword()
             await user.save()
             this.emit('userCreated', user)
-            res.status(201).json(token)
+            res.status(201).json(user)
         }catch(error){
             console.log(error)
             res.status(400).json(error)
         }
       
+    }
+    
+    recieveEvents = async (req, res) => {
+        res.status(200).json({recieved: "ok"})
     }
 }
 

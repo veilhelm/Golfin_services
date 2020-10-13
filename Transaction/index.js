@@ -15,8 +15,7 @@ const subscribeToEventBusService =  async () => {
             }
         }) 
         console.log(subscription.data)
-    } catch (error) {
-        console.log(error)
+    } catch (error) {   
         setTimeout(() =>{
             console.log("retrying to subscribe to eventBus")
             subscribeToEventBusService()

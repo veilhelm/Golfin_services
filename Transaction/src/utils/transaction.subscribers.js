@@ -1,28 +1,29 @@
 const axios = require("axios") 
-async function emitTransactionCreated(transaction) {
-    const eventType = "transactionCreated"
-    try{
-        const event = await axios({
-            method: "POST",
-            baseURL: process.env.EVENT_BUS_URL,
-            url:"events",
-            data: {
-                type: eventType,
+function emitTransaction(kind) {
+    return async function (transaction) {
+        try{
+            const event = await axios({
+                method: "POST",
+                baseURL: process.env.EVENT_BUS_URL,
+                url:"events",
                 data: {
-                    ...transaction
+                    type: kind,
+                    data: {
+                        ...transaction
+                    }
                 }
-            }
-        }) 
-        if(event.status === 400) emitTransactionCreated(transaction)
-        console.log(`event ${eventType} sended successfully`)
-    }catch(error){
-        console.log(`retrying to send event : ${eventType}`)
-        setTimeout(()=>{
-            emitTransactionCreated(transaction)
-        },2000)
+            }) 
+            if(event.status === 400) emitTransaction(transaction)
+            console.log(`event ${kind} sended successfully`)
+        }catch(error){
+            console.log(`retrying to send event : ${kind}`)
+            setTimeout(()=>{
+                emitTransaction(transaction)
+            },2000)
+        }
     }
 }
 
 module.exports ={
-    emitTransactionCreated
+    emitTransaction
 } 

@@ -1,6 +1,6 @@
 const EventEmiter = require("events")
 const Transaction = require("../models/transaction.model")
-const { emitTransactionCreated } = require("../utils/transaction.subscribers")
+const { emitTransaction } = require("../utils/transaction.subscribers")
 
 class TransactionController extends EventEmiter {
     createTransaction = async (req, res) => {
@@ -23,9 +23,13 @@ class TransactionController extends EventEmiter {
             res.status(400).json(error)
         }
     }
+
+    recieveEvents = async (req, res) => {
+        res.status(200).json({recieved: "ok"})
+    }
 }
 
 const transactionController = new TransactionController()
-transactionController.on('transactionCreated', emitTransactionCreated)
-transactionController.on('transactionDeleted', () => console.log("a transaction was deleted"))
+transactionController.on('transactionCreated', emitTransaction('transactionCreated'))
+transactionController.on('transactionDeleted', emitTransaction('transactionDeleted'))
 module.exports= transactionController

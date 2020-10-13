@@ -14,6 +14,6 @@ app.use(morgan("dev"))
 app.use(helmet())
 app.use(cors())
 
-app.use("login/", userLoginRouter)
+app.use("/login", userLoginRouter)
 
 module.exports = app
