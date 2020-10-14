@@ -49,7 +49,7 @@ const {emailValidators, passwordValidators} = require("../utils/validators")
  })
 
  UserSchema.methods.generateAuthToken = async function (){
-     this.tokens.push(jwt.sign({_id: this._id.toString()}, process.env.SECRET_KEY, {expiresIn: "1m"}))
+     this.tokens.push(jwt.sign({_id: this._id.toString()}, process.env.SECRET_KEY, {expiresIn: "1y"}))
      return this.tokens[this.tokens.length -1]
  }
 

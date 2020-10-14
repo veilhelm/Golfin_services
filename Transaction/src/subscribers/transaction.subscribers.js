@@ -13,12 +13,12 @@ function emitTransaction(kind) {
                     }
                 }
             }) 
-            if(event.status === 400) emitTransaction(transaction)
+            if(event.status === 400) emitTransaction(kind)(transaction)
             console.log(`event ${kind} sended successfully`)
         }catch(error){
             console.log(`retrying to send event : ${kind}`)
-            setTimeout(()=>{
-                emitTransaction(transaction)
+            setTimeout(async ()=>{
+                await emitTransaction(kind)(transaction)
             },2000)
         }
     }

@@ -5,7 +5,7 @@ const { emitTransaction } = require("../subscribers/transaction.subscribers")
 class TransactionController extends EventEmiter {
     createTransaction = async (req, res) => {
         try{
-            const transaction = await new Transaction(req.body)
+            const transaction = await new Transaction({...req.body, userId: req.userId})
             const newTransaction = await transaction.save()
             this.emit('transactionCreated', newTransaction)
             res.json(newTransaction)

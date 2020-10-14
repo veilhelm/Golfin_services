@@ -39,7 +39,7 @@ class QueryController extends EventEmiter {
     }
     getPublicTransactions = async ( req, res ) => {
         try {
-            const transactions = await PublicTransaction.find({userId: req.user._id})
+            const transactions = await PublicTransaction.find({userId: req.user._id}, null, {sort:`-createdAt`})
             res.json(transactions)
         } catch (error) {
             res.status(400).json(error)     

@@ -11,11 +11,14 @@ const authMiddleware = async function( req, res, next){
         req.token = token
         next()
     }catch(err){
-        console.log(err)
         if(token){
             const user = await PublicUser.findOne({tokens:token})
-            const newTokens = user.tokens.filter( existingToken => existingToken !== token )
-            await PublicUser.updateOne({_id:user._id},{tokens:newTokens})
+            console.log({theUserIshouldSee: user})
+            if(user){
+                const newTokens = user.tokens.filter( existingToken => existingToken !== token )
+                await PublicUser.updateOne({_id:user._id},{tokens:newTokens})
+                return res.status(401).json("session expired")    
+            }
         }
         res.status(401).json("the user is not authorized. Please provide a valid token to proceed")
     }  
