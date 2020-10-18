@@ -5,5 +5,6 @@ const { authMiddleware } = require("../utils/middlewares")
 router.route("/recieveEvents").post(queryController.handleEvents)
 router.route("/user").get(authMiddleware, queryController.getPublicUser)
 router.route("/transactions").get(authMiddleware, queryController.getPublicTransactions)
+router.route("/totals").get(authMiddleware, queryController.getPublicTotals)
 
 module.exports = router

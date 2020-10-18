@@ -13,7 +13,6 @@ const authMiddleware = async function( req, res, next){
     }catch(err){
         if(token){
             const user = await PublicUser.findOne({tokens:token})
-            console.log({theUserIshouldSee: user})
             if(user){
                 const newTokens = user.tokens.filter( existingToken => existingToken !== token )
                 await PublicUser.updateOne({_id:user._id},{tokens:newTokens})

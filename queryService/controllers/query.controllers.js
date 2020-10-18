@@ -1,4 +1,6 @@
 const EventEmiter = require("events")
+const PublicGoal = require("../models/goals.model")
+const PublicTotals = require("../models/totals.model")
 const PublicTransaction = require("../models/transaction.model")
 const PublicUser = require("../models/user.model")
 
@@ -9,22 +11,38 @@ class QueryController extends EventEmiter {
             switch(type){
                 case 'userCreated':
                     await PublicUser.create(data)
-                    return res.status(200).json({status: "ok"})
+                    break;
+
                 case 'userLogged':
                     const [user] = await PublicUser.find({_id: data.userId})
                     user.tokens.push(data.token)
                     await user.save()
-                    return res.status(200).json({status: "ok"})
+                    break;
+
                 case 'transactionCreated':
                     await PublicTransaction.create(data)
-                    return res.status(200).json({status: "ok"})
+                    break;
+
                 case 'transactionDeleted':
                     await PublicTransaction.findByIdAndDelete(data)
-                    return res.status(200).json({status: "ok"})
-                default :
-                res.status(200).json("ok")
-            }
+                    break;
 
+                case `totalsCreated`:
+                    await PublicTotals.create(data)
+                    break;
+
+                case 'totalsUpdated':
+                    await PublicTotals.findOneAndUpdate({userId: data.userId},{...data})
+                    break;
+
+                case `goalCreated`:
+                    await PublicGoal.create(data)
+                    break;
+                    
+                default :
+                    break
+            }
+        return res.status(200).json({status: "ok"})
         }catch(error){
             console.log(error)
         }
@@ -40,9 +58,25 @@ class QueryController extends EventEmiter {
     getPublicTransactions = async ( req, res ) => {
         try {
             const transactions = await PublicTransaction.find({userId: req.user._id}, null, {sort:`-createdAt`})
-            res.json(transactions)
+            res.status(200).json(transactions)
         } catch (error) {
             res.status(400).json(error)     
+        }
+    }
+    getPublicTotals = async ( req, res ) => {
+        try {
+            const totals = await PublicTotals.findOne({userId: req.user._id})
+            res.status(200).json(totals)
+        } catch (error) {
+            res.status(400).json(error)
+        }
+    }
+    getPublicGoals = async ( req, res ) => {
+        try {
+            const goals = await PublicGoal.find({userId: req.user._id})
+            res.status(200).json(goals)
+        } catch (error) {
+            res.status(400).json(error)
         }
     }
 

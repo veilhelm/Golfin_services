@@ -18,7 +18,7 @@ class TransactionController extends EventEmiter {
         try{
             const deletedTransaction = await Transaction.findOneAndDelete({_id: req.body.id})
             this.emit('transactionDeleted', deletedTransaction)
-            res.json(deletedTransaction)
+            res.status(200).json(deletedTransaction)
         }catch(error){
             res.status(400).json(error)
         }
