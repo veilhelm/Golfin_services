@@ -5,7 +5,8 @@ const { emitGoalCreated } = require("../subscribers/goals.subscribers")
 
 class GoalsController extends EventEmiter {
     createGoal = async (req, res) => {
-        const goal = await new Goal(req.body)
+
+        const goal = await new Goal({...req.body, userId: req.userId})
         goal.calcQuotes()
         await goal.save()
         this.emit('goalCreated', goal)
