@@ -1,6 +1,7 @@
 const EventEmiter = require("events")
 const Goal = require("../models/goals.model")
 const { emitGoalCreated } = require("../subscribers/goals.subscribers")
+const { createPaymentRecord } = require("../utils/paymentRecord")
 
 
 class GoalsController extends EventEmiter {
@@ -16,4 +17,5 @@ class GoalsController extends EventEmiter {
 
 const goalsController = new GoalsController()
 goalsController.on('goalCreated', emitGoalCreated )
+goalsController.on('goalCreated', createPaymentRecord )
 module.exports= goalsController

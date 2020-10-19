@@ -53,6 +53,7 @@ GoalsSchema.methods.calcQuotes = function () {
     if( numberOfMonths > 3) this.timeFrame = 'middle-term'
     if( numberOfMonths > 36) this.timeFrame = 'long-term'
     this.numberOfQuotes = this.timeFrame === 'short-term' ? Math.round(interval.length('weeks')) : numberOfMonths
+    if(this.numberOfQuotes === 0) this.numberOfQuotes = 1
     this.quote = (this.amount * Math.pow((1 + monthlyRates[this.kind]), this.numberOfQuotes)) / this.numberOfQuotes
     this.iRate = monthlyRates[this.kind]
 }
