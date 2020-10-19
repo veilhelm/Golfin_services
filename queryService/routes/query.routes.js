@@ -7,5 +7,6 @@ router.route("/user").get(authMiddleware, queryController.getPublicUser)
 router.route("/transactions").get(authMiddleware, queryController.getPublicTransactions)
 router.route("/totals").get(authMiddleware, queryController.getPublicTotals)
 router.route("/goals").get(authMiddleware, queryController.getPublicGoals)
+router.route("/payments").get(authMiddleware, queryController.getPaymentRecords)
 
 module.exports = router

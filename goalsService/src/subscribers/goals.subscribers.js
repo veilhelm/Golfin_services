@@ -25,7 +25,7 @@ async function emitGoalCreated(goal) {
 }
 
 async function emitPaymentRecordCreated(paymentRecord) {
-    const eventType = "PaymentRecordCreated"
+    const eventType = "paymentRecordCreated"
     try{
         const event = await axios({
             method: "POST",

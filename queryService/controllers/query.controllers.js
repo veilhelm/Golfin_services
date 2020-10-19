@@ -1,5 +1,6 @@
 const EventEmiter = require("events")
 const PublicGoal = require("../models/goals.model")
+const PaymentRecord = require("../models/paymentRecord.model")
 const PublicTotals = require("../models/totals.model")
 const PublicTransaction = require("../models/transaction.model")
 const PublicUser = require("../models/user.model")
@@ -38,6 +39,10 @@ class QueryController extends EventEmiter {
                 case `goalCreated`:
                     await PublicGoal.create(data)
                     break;
+
+                case `paymentRecordCreated`:
+                    await PaymentRecord.create(data)
+                    break;
                     
                 default :
                     break
@@ -73,8 +78,17 @@ class QueryController extends EventEmiter {
     }
     getPublicGoals = async ( req, res ) => {
         try {
-            const goals = await PublicGoal.find({userId: req.user._id})
+            const goals = await PublicGoal.find({userId: req.user._id}, null, {sort:`-createdAt`})
             res.status(200).json(goals)
+        } catch (error) {
+            res.status(400).json(error)
+        }
+    }
+
+    getPaymentRecords = async ( req, res ) => {
+        try {
+            const payments = await PaymentRecord.find({userId: req.user._id})
+            res.status(200).json(payments)
         } catch (error) {
             res.status(400).json(error)
         }

@@ -6,16 +6,15 @@ const { createPaymentRecord } = require("../utils/paymentRecord")
 
 class GoalsController extends EventEmiter {
     createGoal = async (req, res) => {
-
         const goal = await new Goal({...req.body, userId: req.userId})
         goal.calcQuotes()
         await goal.save()
         this.emit('goalCreated', goal)
-        res.status(200).json(goal)
+        const payment = await createPaymentRecord(goal)
+        res.status(200).json({goal, payment})
     }
 }
 
 const goalsController = new GoalsController()
 goalsController.on('goalCreated', emitGoalCreated )
-goalsController.on('goalCreated', createPaymentRecord )
 module.exports= goalsController

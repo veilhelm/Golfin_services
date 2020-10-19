@@ -26,6 +26,7 @@ const createPaymentRecord = async (goal) => {
     const paymentRecord = await new PaymentRecord({payments: records, userId: goal.userId, goalId: goal._id})
     const payment = await paymentRecord.save()
     emitPaymentRecordCreated(payment)
+    return payment
 }
 
 module.exports = {
