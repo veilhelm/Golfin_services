@@ -15,6 +15,18 @@ spec:
       containers:
         - name: event-bus
           image: veilhelmalex/golfin-event-bus
+          env:
+            - name: DB_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: event-bus-config
+                  key: DB_URI
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: event-bus-config
+                  key: PORT
+
 ---
 apiVersion: v1
 kind: Service

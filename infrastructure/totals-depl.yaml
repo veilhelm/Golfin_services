@@ -15,6 +15,23 @@ spec:
       containers:
         - name: totals
           image: veilhelmalex/golfin-totals
+          env:
+            - name: DB_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: totals-config
+                  key: DB_URI
+            - name: SECRET_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: totals-config
+                  key: SECRET_KEY
+            - name: EVENT_BUS_URL
+              value: http://golfin.veilhelmalexander.com:5000
+            - name: REGISTER_USER_URL
+              value: http://golfin.veilhelmalexander.com:3004/totals/recieveEvents
+            - name: PORT
+              value: 3004
 ---
 apiVersion: v1
 kind: Service
