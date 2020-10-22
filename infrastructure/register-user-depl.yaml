@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: register-user-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: register-user
+  template:
+    metadata:
+      labels:
+        app: register-user
+    spec:
+      containers:
+        - name: register-user
+          image: veilhelmalex/golfin-register-user
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: register-user-srv
+spec:
+  selector:
+    app: register-user
+  ports:
+    - name: register-user
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

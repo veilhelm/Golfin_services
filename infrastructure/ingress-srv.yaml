@@ -7,22 +7,38 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: 'true'
 spec:
   rules:
-    - host: posts.com
+    - host: golfin.veilhelmalexander.com
       http:
         paths:
-          - path: /posts/create
+          - path: /users/?(.*)
             backend:
-              serviceName: posts-clusterip-srv
-              servicePort: 4000
-          - path: /posts
+              serviceName: register-user-srv
+              servicePort: 3000
+          - path: /login/?(.*)
+            backend:
+              serviceName: login-srv
+              servicePort: 3001
+          - path: /transaction/?(.*)
+            backend:
+              serviceName: transaction-srv
+              servicePort: 3002
+          - path: /query/?(.*)
             backend:
               serviceName: query-srv
-              servicePort: 4002
-          - path: /posts/?(.*)/comments
+              servicePort: 3003
+          - path: /totals/?(.*)
             backend:
-              serviceName: comments-srv
-              servicePort: 4001
+              serviceName: query-srv
+              servicePort: 3004
+          - path: /goals/?(.*)
+            backend:
+              serviceName: goals-srv
+              servicePort: 3005
+          - path: /events/?(.*)
+            backend:
+              serviceName: event-bus-srv
+              servicePort: 3005
           - path: /?(.*)
             backend:
               serviceName: client-srv
-              servicePort: 3000
+              servicePort: 4000

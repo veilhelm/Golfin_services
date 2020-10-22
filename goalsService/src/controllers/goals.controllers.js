@@ -13,6 +13,9 @@ class GoalsController extends EventEmiter {
         const payment = await createPaymentRecord(goal)
         res.status(200).json({goal, payment})
     }
+    handleEvents = (req, res) => {
+        res.status(200).json({status: "ok"})
+    }
 }
 
 const goalsController = new GoalsController()

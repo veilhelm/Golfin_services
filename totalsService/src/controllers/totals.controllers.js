@@ -4,7 +4,6 @@ const { emitTotalsCreated, emitTotalsUpdated } = require("../subscribers/totals.
 
 class TotalsController extends EventEmiter {
     handleEvents = async ( req , res ) => {
-        console.log(req.body._doc)
         const { type, data } = req.body._doc
         switch (type) {
             case 'userCreated':
