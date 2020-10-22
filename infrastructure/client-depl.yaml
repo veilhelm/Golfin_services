@@ -27,7 +27,7 @@ spec:
             - name: REACT_APP_GOALS_SERVICE_URL
               value: http://golfin.veilhelmalexander.com:3005/goals
             - name: PORT
-              value: 4000
+              value: "4000"
             
 ---
 apiVersion: v1
